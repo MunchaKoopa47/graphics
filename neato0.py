@@ -24,8 +24,9 @@ RED = (150, 0, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 ORANGE = (255, 125 , 0)
-GREEN = (0, 125, 0)
-BLUE = (75, 200, 255)
+GREEN = (32, 76, 35)
+DARKGREEN = (24, 56, 25)
+BLUE = (15, 26, 66)
 YELLOW = (255, 255, 175)
 GRAY = (76, 76, 76)
 BROWN = (51, 19, 0)
@@ -33,10 +34,24 @@ BROWN = (51, 19, 0)
 stars = []
 for i in range(200):
     x = random.randrange(0, 800)
-    y = random.randrange(400, 600)
+    y = random.randrange(0, 400)
     r = random.randrange(1, 5)
     s = [x, y, r, r]
     stars.append(s)
+
+#grass = []
+#for i in range(10):
+    #x = random.randrange(0, 800)
+    #y = random.randrange(400, 600)
+    #grass.append(g)
+
+rain = []
+for i in range(200):
+    x = random.randrange(0, 800)
+    y = random.randrange(0, 600)
+    r = random.randrange(3, 5)
+    d = [x, y, r, r]
+    rain.append(d)
         
 # Game loop
 done = False
@@ -71,6 +86,17 @@ def draw_fence():
 def draw_stars():
     for s in stars:
         pygame.draw.ellipse(screen, WHITE, s)
+        print(s)
+
+#def draw_grass():
+    #for g in grass:
+        #pygame.draw.polygon(screen, DARKGREEN, g)
+        #print(g)
+
+def draw_rain():
+    for d in rain:
+        pygame.draw.ellipse(screen, BLUE, d)
+        print(d)
 
 def draw_cloud(x, y):
     pygame.draw.ellipse(screen, GRAY, [x, y + 20, 40 , 40])
@@ -79,17 +105,12 @@ def draw_cloud(x, y):
     pygame.draw.ellipse(screen, GRAY, [x + 35, y, 50, 50])
     pygame.draw.rect(screen, GRAY, [x + 20, y + 20, 60, 40])
 
-def make_grass():
-    stars = []
-    for i in range(10):
-        x = random.randrange(0, 800)
-        y = random.randrange(0, 400)
-        r = random.randrange(1, 5)
-        s = [x, y, r, r]
-        stars.append(s)
-
 def draw_tree(x, y):
     pygame.draw.rect(screen, BROWN, [x, y, 20, 100])
+    pygame.draw.ellipse(screen, GREEN, [x - 10, y - 40, 40, 70])
+
+def draw_table(x, y):
+    pygame.draw.rect(screen, BROWN, [x, y, 50, 10])
 
 
 
@@ -99,8 +120,6 @@ def draw_tree(x, y):
 
 
 while not done:
-    # Event processing (React to key presses, mouse clicks, etc.)
-    ''' for now, we'll just check to see if the X is clicked '''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -115,9 +134,11 @@ while not done:
     draw_cloud(450, 175)
     draw_cloud(650, 100)
     draw_landscape()
+    #draw_grass()
     draw_tree(600, 300)
     draw_house()
     draw_fence()
+    draw_rain()
 
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
